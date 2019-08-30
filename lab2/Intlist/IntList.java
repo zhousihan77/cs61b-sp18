@@ -78,20 +78,41 @@ public class IntList {
     /**
      * Returns a list consisting of the elements of A followed by the
      * *  elements of B.  May modify items of A. Don't use 'new'.
+     *recursion
      */
-
     public static IntList dcatenate(IntList A, IntList B) {
         //TODO:  fill in method
-        return null;
+        if (A == null) {
+            return B;
+        }
+        IntList pre = A;
+        if(pre.rest != null){
+            pre = pre.rest;
+            dcatenate(pre, B);
+        }else {
+            pre.rest = B;
+        }
+        return A;
     }
-
+    //iteration
     /**
      * Returns a list consisting of the elements of A followed by the
      * * elements of B.  May NOT modify items of A.  Use 'new'.
+     *recursion
      */
     public static IntList catenate(IntList A, IntList B) {
         //TODO:  fill in method
-        return null;
+        if (null == A) {
+            return B;
+        } else {
+            IntList res = new IntList(A.first, A.rest);
+            if(null == A.rest){
+                res.rest = B;
+                return res;
+            }
+            res.rest = catenate(A.rest, B);
+            return res;
+        }
     }
 
 
