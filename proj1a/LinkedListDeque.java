@@ -7,8 +7,8 @@
  */
 public class LinkedListDeque<T> {
     private int size;
-    ListNode senHead;
-    ListNode senRear;
+    private ListNode senHead;
+    private ListNode senRear;
 
     private class ListNode {
         public T item;
@@ -30,17 +30,9 @@ public class LinkedListDeque<T> {
         size = 0;
     }
 
-    public LinkedListDeque(T item) {
-        senHead = new ListNode(null, null, null);
-        senRear = new ListNode(null, null, null);
-        ListNode first = new ListNode(item, senHead, senRear);
-        senHead.next = first;
-        senRear.last = first;
-    }
-
     public void addFirst(T item) {
         ListNode p = new ListNode(item, senHead, senHead.next);
-        p.next.last = p;
+        senHead.next.last = p;
         senHead.next = p;
         size++;
     }
@@ -48,7 +40,7 @@ public class LinkedListDeque<T> {
     public void addLast(T item) {
         ListNode p = new ListNode(item, senRear.last, senRear);
         senRear.last.next = p;
-        p.next = senRear;
+        senRear.last = p;
         size++;
     }
 
@@ -95,12 +87,12 @@ public class LinkedListDeque<T> {
     }
 
     public T get(int index) {
-        if (size < index) {
+        if (size <= index) {
             return null;
         }
         ListNode p = senHead.next;
         int count = 0;
-        while (count < index) {
+        while (count != index) {
             p = p.next;
             count++;
         }
