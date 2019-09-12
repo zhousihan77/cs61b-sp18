@@ -11,11 +11,11 @@ public class LinkedListDeque<T> {
     private ListNode senRear;
 
     private class ListNode {
-        public T item;
-        public ListNode next;
-        public ListNode last;
+        private T item;
+        private ListNode next;
+        private ListNode last;
 
-        public ListNode(T value, ListNode l, ListNode n) {
+        private ListNode(T value, ListNode l, ListNode n) {
             item = value;
             next = n;
             last = l;
@@ -107,6 +107,6 @@ public class LinkedListDeque<T> {
         if (0 == index) {
             return start.item;
         }
-         return recur(index, start.next);
+         return recur(index - 1, start.next);
     }
 }
