@@ -42,8 +42,9 @@ public class ArrayDeque<T> {
      * A List with first FIRST0 and rest REST0.
      */
     private void resize() {
+        int temSize = size;
         if(count == size) {
-            size = count * 2;
+            size *= 2;
         } else if(16 <= count && count < size / 4){
             size /= 2;
         } else {
@@ -56,11 +57,11 @@ public class ArrayDeque<T> {
                 temp[i - first] = que[i];
             }
         } else {
-            for (int i = first; i < size; i++) {
+            for (int i = first; i < temSize; i++) {
                 temp[i - first] = que[i];
             }
             for (int i = 0; i <= rear; i++) {
-                temp[size - first] = que[i];
+                temp[temSize - first] = que[i];
             }
         }
         que = temp;
