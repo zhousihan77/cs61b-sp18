@@ -138,7 +138,7 @@ public class ArrayDeque<T> {
      * A List with first FIRST0 and rest REST0.
      */
     public T removeFirst() {
-        int temp = first;
+        T temp = que[first];
         if (size - 1 == first) {
             first = 0;
         } else {
@@ -146,21 +146,21 @@ public class ArrayDeque<T> {
         }
         count--;
         resize();
-        return que[temp];
+        return temp;
     }
 
     /**
      * A List with first FIRST0 and rest REST0.
      */
     public T removeLast() {
-        int temp = rear;
+        T temp = que[rear];
         if (0 == rear) {
             rear = size - 1;
         } else {
             rear--;
         }
         resize();
-        return que[temp];
+        return temp;
     }
 
     /**
