@@ -41,11 +41,27 @@ public class ArrayDeque<T> {
     /**
      * A List with first FIRST0 and rest REST0.
      */
-    private void expansion() {
-        size = count * 2;
+    private void resize() {
+        if(count == size) {
+            size = count * 2;
+        } else if(16 <= count && count < size / 4){
+            size /= 2;
+        } else {
+            return;
+        }
+
         T[] temp = (T[]) new Object[size];
-        for (int i = 0; i < count; i++) {
-            temp[i] = que[i];
+        if (first <= rear) {
+            for (int i = first; i <= rear; i++) {
+                temp[i - first] = que[i];
+            }
+        } else {
+            for (int i = first; i < size; i++) {
+                temp[i - first] = que[i];
+            }
+            for (int i = 0; i <= rear; i++) {
+                temp[size - first] = que[i];
+            }
         }
         que = temp;
         first = 0;
@@ -56,9 +72,7 @@ public class ArrayDeque<T> {
      * A List with first FIRST0 and rest REST0.
      */
     public void addFirst(T item) {
-        if (count == size) {
-            expansion();
-        }
+        resize();
         if (0 == first) {
             first = size - 1;
             que[first] = item;
@@ -72,9 +86,7 @@ public class ArrayDeque<T> {
      * A List with first FIRST0 and rest REST0.
      */
     public void addLast(T item) {
-        if (count == size) {
-            expansion();
-        }
+        resize();
         if (size - 1 == rear) {
             rear = 0;
             que[rear] = item;
@@ -124,28 +136,6 @@ public class ArrayDeque<T> {
     /**
      * A List with first FIRST0 and rest REST0.
      */
-    private void decrease() {
-        T[] temp = (T[]) new Object[size / 2];
-        if (first <= rear) {
-            for (int i = first; i <= rear; i++) {
-                temp[i - first] = que[i];
-            }
-        } else {
-            for (int i = first; i < size; i++) {
-                temp[i - first] = que[i];
-            }
-            for (int i = 0; i <= rear; i++) {
-                temp[size - first] = que[i];
-            }
-        }
-        size /= 2;
-        first = 0;
-        rear = count - 1;
-    }
-
-    /**
-     * A List with first FIRST0 and rest REST0.
-     */
     public T removeFirst() {
         int temp = first;
         if (size - 1 == first) {
@@ -154,9 +144,7 @@ public class ArrayDeque<T> {
             first++;
         }
         count--;
-        if (16 <= count && count < size / 4) {
-            decrease();
-        }
+        resize();
         return que[temp];
     }
 
@@ -170,9 +158,7 @@ public class ArrayDeque<T> {
         } else {
             rear--;
         }
-        if (16 <= count && count < size / 4) {
-            decrease();
-        }
+        resize();
         return que[temp];
     }
 
@@ -182,13 +168,13 @@ public class ArrayDeque<T> {
      * @param index
      */
     public T get(int index) {
-        if (count - 1 < index) {
+        if (count <= index) {
             return null;
         }
-        if (first <= rear || index <= size - first) {
+        if (first <= rear || index < size - first) {
             return que[first + index];
         } else {
-            return que[index - (size - first) - 1];
+            return que[index - (size - first)];
         }
     }
 }
