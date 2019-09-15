@@ -74,11 +74,15 @@ public class ArrayDeque<T> {
      */
     public void addFirst(T item) {
         resize();
-        if (0 == first) {
-            first = size - 1;
+        if(0 == count) {
             que[first] = item;
         } else {
-            que[--first] = item;
+            if (0 == first) {
+                first = size - 1;
+                que[first] = item;
+            } else {
+                que[--first] = item;
+            }
         }
         count++;
     }
@@ -88,11 +92,15 @@ public class ArrayDeque<T> {
      */
     public void addLast(T item) {
         resize();
-        if (size - 1 == rear) {
-            rear = 0;
+        if(0 == count) {
             que[rear] = item;
         } else {
-            que[++rear] = item;
+            if (size - 1 == rear) {
+                rear = 0;
+                que[rear] = item;
+            } else {
+                que[++rear] = item;
+            }
         }
         count++;
     }
@@ -159,6 +167,7 @@ public class ArrayDeque<T> {
         } else {
             rear--;
         }
+        count--;
         resize();
         return temp;
     }
