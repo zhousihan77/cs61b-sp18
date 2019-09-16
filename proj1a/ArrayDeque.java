@@ -150,10 +150,12 @@ public class ArrayDeque<T> {
             return null;
         }
         T temp = que[first];
-        if (size - 1 == first) {
-            first = 0;
-        } else {
-            first++;
+        if (first == rear) {
+            if (size - 1 == first) {
+                first = 0;
+            } else {
+                first++;
+            }
         }
         count--;
         resize();
@@ -168,10 +170,12 @@ public class ArrayDeque<T> {
             return null;
         }
         T temp = que[rear];
-        if (0 == rear) {
-            rear = size - 1;
-        } else {
-            rear--;
+        if (first == rear) {
+            if (0 == rear) {
+                rear = size - 1;
+            } else {
+                rear--;
+            }
         }
         count--;
         resize();
@@ -194,6 +198,7 @@ public class ArrayDeque<T> {
         }
     }
 
+    /**
     public static void main(String[] args) {
         ArrayDeque<Integer> aQue = new ArrayDeque();
         for(int i = 16; i>=0 ; i--) {
@@ -204,4 +209,5 @@ public class ArrayDeque<T> {
             System.out.println(aQue.removeLast());
         }
     }
+     */
 }
