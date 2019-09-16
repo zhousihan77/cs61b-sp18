@@ -150,7 +150,7 @@ public class ArrayDeque<T> {
             return null;
         }
         T temp = que[first];
-        if (first == rear) {
+        if (first != rear) {
             if (size - 1 == first) {
                 first = 0;
             } else {
@@ -170,7 +170,7 @@ public class ArrayDeque<T> {
             return null;
         }
         T temp = que[rear];
-        if (first == rear) {
+        if (first != rear) {
             if (0 == rear) {
                 rear = size - 1;
             } else {
