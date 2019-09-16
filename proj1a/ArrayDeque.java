@@ -42,10 +42,10 @@ public class ArrayDeque<T> {
      * A List with first FIRST0 and rest REST0.
      */
     private void resize() {
-        int temSize = size;
+        int originSize = size;
         if(count == size) {
             size *= 2;
-        } else if(16 <= count && count < size / 4){
+        } else if(16 <= count && count < Math.ceil(size / 4)) {
             size /= 2;
         } else {
             return;
@@ -57,11 +57,11 @@ public class ArrayDeque<T> {
                 temp[i - first] = que[i];
             }
         } else {
-            for (int i = first; i < temSize; i++) {
+            for (int i = first; i < originSize; i++) {
                 temp[i - first] = que[i];
             }
             for (int i = 0; i <= rear; i++) {
-                temp[temSize - first] = que[i];
+                temp[originSize - first + i] = que[i];
             }
         }
         que = temp;
@@ -146,6 +146,9 @@ public class ArrayDeque<T> {
      * A List with first FIRST0 and rest REST0.
      */
     public T removeFirst() {
+        if(0 == count) {
+            return null;
+        }
         T temp = que[first];
         if (size - 1 == first) {
             first = 0;
@@ -161,6 +164,9 @@ public class ArrayDeque<T> {
      * A List with first FIRST0 and rest REST0.
      */
     public T removeLast() {
+        if(0 == count) {
+            return null;
+        }
         T temp = que[rear];
         if (0 == rear) {
             rear = size - 1;
@@ -185,6 +191,17 @@ public class ArrayDeque<T> {
             return que[first + index];
         } else {
             return que[index - (size - first)];
+        }
+    }
+
+    public static void main(String[] args) {
+        ArrayDeque<Integer> aQue = new ArrayDeque();
+        for(int i = 16; i>=0 ; i--) {
+            aQue.addFirst(i);
+        }
+        for(int i = 0;i <17; i+=2) {
+            System.out.println(aQue.removeFirst());
+            System.out.println(aQue.removeLast());
         }
     }
 }
