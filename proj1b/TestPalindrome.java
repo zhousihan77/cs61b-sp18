@@ -15,4 +15,15 @@ public class TestPalindrome {
         }
         assertEquals("persiflage", actual);
     }
+
+    @Test
+    /**
+    public void testIspalindrome() {
+        assertFalse(palindrome.isPalindrome("racec"));
+    }*/
+
+    public void testIspalindrome() {
+        CharacterComparator cc = new OffByOne();
+        assertTrue(palindrome.isPalindrome("flake", cc));
+    }
 }
